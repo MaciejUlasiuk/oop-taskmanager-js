@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Zadań z Użytkownikami</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Lista Zadań</h1>
+
+        <div class="app-layout mt-3">
+            <div class="controls-column">
+                <div class="mb-3 card">
+                    <div class="card-body">
+                        <h5 class="card-title">Użytkownik</h5>
+                        <div class="form-group">
+                            <label for="userInput">Nazwa użytkownika:</label>
+                            <input type="text" class="form-control" id="userInput" placeholder="np. Jan Kowalski">
+                        </div>
+                        <button id="switchUserBtn" class="btn btn-info btn-block">Przełącz / Ustaw Użytkownika</button>
+                        <p class="mt-2 mb-1">Aktualny użytkownik: <strong id="currentUserDisplay">Nikt</strong></p>
+                        <div class="mt-1">
+                            <small>Dostępni użytkownicy (kliknij):</small>
+                            <div id="knownUsersList" class="d-flex flex-wrap mt-1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3 card">
+                    <div class="card-body">
+                        <h5 class="card-title">Dodaj nowe zadanie</h5>
+                        <form id="taskForm">
+                            <div class="form-group">
+                                <label for="taskInput">Treść zadania:</label>
+                                <input type="text" class="form-control" id="taskInput" placeholder="np. Zrobić obiad" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="taskPriority">Priorytet:</label>
+                                    <select id="taskPriority" class="form-control">
+                                        <option value="low">Niski</option>
+                                        <option value="medium" selected>Średni</option>
+                                        <option value="high">Wysoki</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="taskCategory">Kategoria:</label>
+                                    <input type="text" class="form-control" id="taskCategory" placeholder="np. Aeh, Dom">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Dodaj zadanie</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="mb-3 card">
+                    <div class="card-body">
+                        <h5 class="card-title">Filtry i Sortowanie</h5>
+                        <div class="form-group">
+                            <label for="filterStatus">Filtruj po statusie:</label>
+                            <select id="filterStatus" class="form-control">
+                                <option value="all">Wszystkie</option>
+                                <option value="pending">Oczekujące</option>
+                                <option value="done">Ukończone</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="filterCategoryInput">Filtruj po kategorii:</label>
+                            <input type="text" class="form-control" id="filterCategoryInput" placeholder="Wpisz kategorię...">
+                        </div>
+                         <div class="form-group">
+                            <label for="sortTasks">Sortuj po:</label>
+                            <select id="sortTasks" class="form-control">
+                                <option value="createdAt_desc">Data utworzenia (Najnowsze)</option>
+                                <option value="createdAt_asc">Data utworzenia (Najstarsze)</option>
+                                <option value="priority_desc">Priorytet (Wysoki > Niski)</option>
+                                <option value="priority_asc">Priorytet (Niski > Wysoki)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tasks-column">
+                <h2 class="tasks-column-header">Zadania (<span id="taskCount">0</span>)</h2>
+                <ul id="taskList" class="list-group">
+                </ul>
+            </div>
+        </div>
+
+        <div id="customEditTaskModal" class="modal-custom">
+            <div class="modal-custom-content">
+                <div class="modal-custom-header">
+                    <h5 class="modal-custom-title">Edytuj Zadanie</h5>
+                    <button type="button" class="close-custom-modal" aria-label="Close">×</button>
+                </div>
+                <div class="modal-custom-body">
+                    <form id="editTaskForm">
+                        <input type="hidden" id="editTaskId">
+                        <div class="form-group">
+                            <label for="editTaskContent">Treść zadania:</label>
+                            <input type="text" class="form-control" id="editTaskContent" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="editTaskPriority">Priorytet:</label>
+                                <select id="editTaskPriority" class="form-control">
+                                    <option value="low">Niski</option>
+                                    <option value="medium">Średni</option>
+                                    <option value="high">Wysoki</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="editTaskCategory">Kategoria:</label>
+                                <input type="text" class="form-control" id="editTaskCategory" placeholder="np. Praca, Dom">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-custom-footer">
+                    <button type="button" id="cancelEditTaskBtn" class="btn btn-secondary">Anuluj</button>
+                    <button type="button" id="saveEditTaskBtn" class="btn btn-primary">Zapisz zmiany</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
